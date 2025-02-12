@@ -76,7 +76,8 @@ const OnboardingButton = ({
       backgroundColor: backgroundColor,
     };
   });
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParams>>;
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -85,7 +86,7 @@ const OnboardingButton = ({
             index: flatListIndex.value + 1,
           });
         } else {
-          alert("Click here to start shopping online!!!");
+          navigation.replace("TabsStack", { screen: "Home" });
         }
       }}
     >

@@ -15,31 +15,34 @@ import OnboardingButton from "../Components/OnboardingComponents/OnboardingButto
 
 type Props = {};
 const OnboardingScreen = ({
-  navigation: route,
-}): RootStackScreenProps<"OnboardingScreen"> => {
+  navigation,
+}: RootStackScreenProps<"OnboardingScreen">) => {
   const [onboardingItems, setOnboardingItems] =
     useState<OnboardingPrograms[]>(OnboardingData);
-  const flastListRef = useAnimatedRef<FlatList<OnboardingPrograms>>();
+  const flatListRef = useAnimatedRef<FlatList<OnboardingPrograms>>();
   const x = useSharedValue(0);
-  const flastListIndex = useSharedValue(0);
+  const flatListIndex = useSharedValue(0);
+
   const onScrollHandle = useAnimatedScrollHandler({
     onScroll: (event) => {
       x.value = event.contentOffset.x;
     },
   });
+
   const onViewableItemsChanged = ({
     viewableItems,
   }: {
     viewableItems: ViewToken[];
   }) => {
-    if (viewableItems[0].index !== null) {
-      flastListIndex.value = viewableItems[0].index;
+    if (viewableItems[0]?.index !== null) {
+      flatListIndex.value = viewableItems[0].index;
     }
   };
+
   return (
     <View style={{ flex: 1 }}>
       <Animated.FlatList
-        ref={flastListRef}
+        ref={flatListRef}
         onScroll={onScrollHandle}
         data={onboardingItems}
         renderItem={({ item, index }) => (
@@ -72,11 +75,12 @@ const OnboardingScreen = ({
         <OnboardingButton
           x={x}
           itemLength={onboardingItems.length}
-          flatListIndex={flastListIndex}
-          flatListRef={flastListRef}
+          flatListIndex={flatListIndex}
+          flatListRef={flatListRef}
         />
       </View>
     </View>
   );
 };
+
 export default OnboardingScreen;
